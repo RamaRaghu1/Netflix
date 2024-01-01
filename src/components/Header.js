@@ -4,15 +4,17 @@ import { signOut } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-
+import { toggleGptSearchView } from "../utils/gptSlice";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO, PHOTO_URL } from "../utils/constants";
+import { LOGO, PHOTO_URL, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header=()=>{
   const dispatch=useDispatch();
 const navigate=useNavigate();
 const user=useSelector((store)=>store.user)
+const showGptSearch= useSelector((store)=>store.gpt.showGptSearch)
 
   const handleSignOut=()=>{
     signOut(auth).then(() => {
@@ -43,14 +45,34 @@ const user=useSelector((store)=>store.user)
       return()=>unsubscribe();
 },[])
 
+const handleGptSearchClick = ()=>{
+  // toggle GPT search
+  dispatch(toggleGptSearchView());
+}
+
+const handleLanguageChange=(e)=>{
+  dispatch(changeLanguage(e.target.value))
+}
+
     return(
         <div className="absolute px-8 py-2 bg-gradient-to-b from-black z-10 w-screen flex justify-between flex-col md:flex-row">
           <img className=" w-44"  alt="logo" src={LOGO}/>
 
          {user && (
-           <div className="flex justify-end w-10 h-9 m-3 cursor-pointer">
+          <div className="flex p-2">
+          {showGptSearch && (
+              <select className="m-2 p-2 rounded-lg font-bold text-white bg-gray-900" onChange={handleLanguageChange}>
+              {SUPPORTED_LANGUAGES.map(lang=> <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
+               </select>
+          )}
+            <button className="py-2 px-4 m-2 text-white font-bold bg-purple-500 rounded-lg" onClick={handleGptSearchClick}>
+
+              {showGptSearch? "Homepage": "GPT Search"}
+            </button>
+           <div className="flex justify-end w-24 h-9 m-3 cursor-pointer">
            <img src={PHOTO_URL} alt="usericon"/>
            <button className="bg-red-400" onClick={handleSignOut}>(sign out)</button>
+         </div>
          </div>
          )}
         </div>
