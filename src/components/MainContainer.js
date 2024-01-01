@@ -7,7 +7,7 @@ const MainContainer=()=>{
    
     // early return: intially the movies will be null, so just to stop code from breaking a return statement is passed
     if(!movies) return;
-   const mainMovie=movies[4]
+   const mainMovie=movies[0]
    console.log(mainMovie)
 
    const {original_title, overview,id}=mainMovie;
