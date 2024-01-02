@@ -98,11 +98,11 @@ setIsSignInForm(!isSignInForm)
     <Header/>
     <div className="absolute">
 
-    <img  src={BG_IMG}/>
+    <img  className="h-screen w-screen object-cover"  src={BG_IMG}/>
     </div>
     <form 
     onSubmit={(e)=>e.preventDefault()}
-    className="w-3/12 p-12 bg-black absolute my-36 mx-auto right-0 left-0 text-white bg-opacity-80">
+    className="w-full md:w-3/12 p-12 bg-black absolute md:my-36 md:mx-auto right-0 left-0 text-white bg-opacity-80">
        <h1 className="font-bold text-3xl p-4">{isSignInForm ? "Sign In":"Sign Up"}</h1>
        {!isSignInForm && ( <input type="text" placeholder="Full Name" ref={name} className="p-4 my-4 w-full bg-gray-700"/>)}
       
