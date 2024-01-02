@@ -8,6 +8,7 @@ const Footer = () => {
           Made with ❤ by{" "}
           <a
             href={"https://www.linkedin.com/in/rama-raghunathan/"}
+            rel="noreferrer"
             target="_blank"
           >
             Rama
